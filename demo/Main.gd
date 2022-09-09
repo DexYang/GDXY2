@@ -1,7 +1,7 @@
 extends Node2D
 
 const MAP = preload("map.gd") # Relative path
-onready var map = MAP.new("D:/Godot/gdxy2/demo/1410.map")
+onready var map = MAP.new("D:/Godot/gdxy2/demo/1001.map")
 
 
 
@@ -16,7 +16,7 @@ func _ready():
 	$Sprite.offset = Vector2(image.get_width() / 2, image.get_height() / 2)
 	
 func create_image():
-	image = map.getImage(0)
+	image = map.getMask(0)
 	# image.create(320, 240, false, Image.FORMAT_RGBA8)	
 	# image.fill(Color.red)
 	
