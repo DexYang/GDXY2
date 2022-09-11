@@ -1,7 +1,7 @@
 extends Object
 
-var GDXY2 = preload("res://bin/gdxy2.gdns")
-var gdxy2 = GDXY2.new()
+var GDXY = preload("res://bin/gdxy.gdns")
+var gdxy = GDXY.new()
 
 var WAS = load("was.gd")
 
@@ -44,7 +44,7 @@ func get(s: String):
 	if s.begins_with("0x"):
 		_hash = s.hex_to_int()
 	else:
-		_hash = gdxy2.string_id(s)
+		_hash = gdxy.string_id(s)
 
 	var file_info = self.file_dict[_hash]
 	var file = File.new()

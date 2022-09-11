@@ -1,7 +1,7 @@
 extends Object
 
-var GDXY2 = preload("res://bin/gdxy2.gdns")
-var gdxy2 = GDXY2.new()
+var GDXY = load("res://bin/gdxy.gdns")
+var gdxy = GDXY.new()
 
 const BLOCK_WIDTH = 320.0 #地图块宽度
 const BLOCK_HEIGHT = 240.0 #地图块高度
@@ -82,11 +82,6 @@ func _init(path):
 					if 0 <= index and index < self.blockNum:
 						self.blocks[index].ownMasks.append(i)
 			self.masks[i] = maskInfo
-	elif self.flag == "XPAM":
-		var flag = file.get_buffer(4).get_string_from_utf8()
-		var size = file.get_32()
-		if flag == "HGPJ":
-			self.jpeg_head = file.get_buffer(size)
 	
 	self.travel(file)
 	file.close()
@@ -178,17 +173,8 @@ func getMap(i):
 	
 	file.seek(offset)
 	var jpeg = file.get_buffer(size)
-	if self.flag == "XPAM":
-		var temp =[]
-		temp.append_array(self.jpeg_head)
-		jpeg.append(255)  # FF
-		jpeg.append(217)  # D9
-		temp.append_array(jpeg)
-		var pba = gdxy2.read_mapx(temp)
-		img = Image.new()
-		img.create_from_data(320, 240, false, Image.FORMAT_RGB8, pba)
-	elif self.flag == "0.1M":
-		var pba = gdxy2.repair_jpeg(jpeg)
+	if self.flag == "0.1M":
+		var pba = gdxy.repair_jpeg(jpeg)
 		img = Image.new()
 		var err = img.load_jpg_from_buffer(pba)
 
@@ -207,7 +193,7 @@ func getMask(i):
 
 	var img = Image.new()
 	var maskBuffer = file.get_buffer(size)
-	var pba = gdxy2.read_mask(maskBuffer, masks[i].width, masks[i].height)
+	var pba = gdxy.read_mask(maskBuffer, masks[i].width, masks[i].height)
 	img.create_from_data(masks[i].width, masks[i].height, false, Image.FORMAT_RGBA8, pba)
 
 	file.close()

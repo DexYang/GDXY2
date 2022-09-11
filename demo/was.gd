@@ -1,7 +1,7 @@
 extends Object
 
-var GDXY2 = preload("res://bin/gdxy2.gdns")
-var gdxy2 = GDXY2.new()
+var GDXY = preload("res://bin/gdxy.gdns")
+var gdxy = GDXY.new()
 
 var path: String
 var offset: int
@@ -53,7 +53,7 @@ func _init(path: String, offset: int = 0, size: int = 0):
 		for i in range(self.head_size - 12):
 			self.time.append(file.get_8())
 			
-	self.pal = gdxy2.format_pal(file.get_buffer(512))
+	self.pal = gdxy.format_pal(file.get_buffer(512))
 	
 	for i in range(self.pic_num):
 		self.pic_offsets.append(file.get_32() + self.offset + 4 + self.head_size)
@@ -80,7 +80,7 @@ func _init(path: String, offset: int = 0, size: int = 0):
 			
 			file.seek(self.pic_offsets[index])
 			var buff = file.get_buffer(frame_size + 16)
-			var pba = gdxy2.read_was(buff, self.pal)
+			var pba = gdxy.read_was(buff, self.pal)
 			
 			frame.img = Image.new()
 			frame.img.create_from_data(frame.width, frame.height, false, Image.FORMAT_RGBA8, pba)

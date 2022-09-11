@@ -1,7 +1,7 @@
 extends Node2D
 
 var MAP = load("map.gd") # Relative path
-onready var map = MAP.new("D:/xy2/大话西游2/scene/1001.map")
+onready var map = MAP.new("D:/xy2/大话西游2/newscene/1410.map")
 
 var WDF = load("wdf.gd")
 onready var wdf = WDF.new("D:/xy2/大话西游2/shape.wdf")
@@ -16,11 +16,11 @@ func _ready():
 	update_texture()
 	$Sprite.offset = Vector2(image.get_width() / 2, image.get_height() / 2)
 	
-#	var was = wdf.get("char\\0019\\defend.tcp")
-#	var texture = ImageTexture.new()
-#	texture.create_from_image(was.getFrame(0, 0).img)
-#	$Sprite.set_texture(texture)
-#	$Sprite.offset = Vector2(100, 100)
+	var was = wdf.get("char\\0019\\defend.tcp")
+	var texture = ImageTexture.new()
+	texture.create_from_image(was.getFrame(0, 0).img)
+	$Sprite.set_texture(texture)
+	$Sprite.offset = Vector2(100, 100)
 	
 	
 func create_image():

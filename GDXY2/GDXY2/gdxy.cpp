@@ -1,29 +1,13 @@
-#include "gdxy2.hpp"
+#include "GDXY.hpp"
 #include <vector>
 #include <stdio.h>
 
 #define MEM_READ_WITH_OFF(off,dst,src,len) if(off+len<=src.size()){  memcpy((uint8_t*)dst,(uint8_t*)(src.data()+off),len);off+=len;   }
 
-void GDXY2::_init() {
+void GDXY::_init() {
 }
 
-PoolByteArray GDXY2::read_mapx(godot::PoolByteArray bytes) {
-	const uint8_t* in = bytes.read().ptr();
-
-	godot::PoolByteArray pba = godot::PoolByteArray();
-	bool result = m_ujpeg.decode(in, bytes.size(), true);
-	if (!result)
-		return pba;
-	if (!m_ujpeg.isValid())
-		return pba;
-
-	pba.resize(230400);
-	m_ujpeg.getImage(pba.write().ptr());
-
-	return pba;
-}
-
-PoolByteArray GDXY2::repair_jpeg(godot::PoolByteArray bytes) {
+PoolByteArray GDXY::repair_jpeg(godot::PoolByteArray bytes) {
 	const uint8_t* in = bytes.read().ptr();
 
 	godot::PoolByteArray pba = godot::PoolByteArray();
@@ -35,28 +19,7 @@ PoolByteArray GDXY2::repair_jpeg(godot::PoolByteArray bytes) {
 	return pba;
 }
 
-PoolByteArray GDXY2::read_jpeg(godot::PoolByteArray bytes) {
-	const uint8_t* in = bytes.read().ptr();
-
-	std::vector<uint8_t> out(bytes.size() * 2, 0);
-	uint32_t tmpSize = 0;
-	jpeg_repair((uint8_t*)in, bytes.size(), out.data(), &tmpSize);
-
-	godot::PoolByteArray pba = godot::PoolByteArray();
-	bool result = m_ujpeg.decode(out.data(), tmpSize, false);
-	if (!result)
-		return pba;
-	if (!m_ujpeg.isValid())
-		return pba;
-
-	pba.resize(230400);
-	m_ujpeg.getImage(pba.write().ptr());
-
-	return pba;
-}
-
-
-PoolByteArray GDXY2::read_mask(godot::PoolByteArray bytes, int width, int height) {
+PoolByteArray GDXY::read_mask(godot::PoolByteArray bytes, int width, int height) {
 	const uint8_t* in = bytes.read().ptr();
 	std::vector<uint8_t> out((width + 3) / 4 * height, 0);
 
@@ -97,7 +60,7 @@ PoolByteArray GDXY2::read_mask(godot::PoolByteArray bytes, int width, int height
 }
 
 
-size_t GDXY2::decompress_mask(void* in, void* out) {
+size_t GDXY::decompress_mask(void* in, void* out) {
 	uint8_t* op;
 	uint8_t* ip;
 	unsigned t;
@@ -260,7 +223,7 @@ eof_found:
 	return (op - (uint8_t*)out);
 }
 
-void GDXY2::jpeg_repair(uint8_t* Buffer, uint32_t inSize, uint8_t* outBuffer, uint32_t* outSize) {
+void GDXY::jpeg_repair(uint8_t* Buffer, uint32_t inSize, uint8_t* outBuffer, uint32_t* outSize) {
 	// JPEG数据处理原理
 	// 1、复制D8到D9的数据到缓冲区中
 	// 2、删除第3、4个字节 FFA0
@@ -388,12 +351,12 @@ void GDXY2::jpeg_repair(uint8_t* Buffer, uint32_t inSize, uint8_t* outBuffer, ui
 	*outSize = Temp;
 }
 
-void GDXY2::byte_swap(uint16_t& value) {
+void GDXY::byte_swap(uint16_t& value) {
 	uint16_t tempvalue = value >> 8;
 	value = (value << 8) | tempvalue;
 }
 
-PoolByteArray GDXY2::read_was(godot::PoolByteArray bytes, godot::PoolByteArray palette) {
+PoolByteArray GDXY::read_was(godot::PoolByteArray bytes, godot::PoolByteArray palette) {
 	uint8_t* data = (uint8_t* )bytes.read().ptr();
 	RGBA* pal = (RGBA* )palette.read().ptr();
 
@@ -562,19 +525,17 @@ PoolByteArray GDXY2::read_was(godot::PoolByteArray bytes, godot::PoolByteArray p
 	godot::PoolByteArray pba = godot::PoolByteArray();
 
 	pba.resize(frameHeader.height * frameHeader.width * 4);
-	m_ujpeg.getImage(pba.write().ptr());
+
 	memcpy(pba.write().ptr(), (uint8_t*)rgba.data(), frameHeader.height* frameHeader.width * 4);
 	return pba;
 }
 
-uint32_t GDXY2::set_alpha(RGBA Color, uint8_t Alpha) {
+uint32_t GDXY::set_alpha(RGBA Color, uint8_t Alpha) {
 	Color.A = Alpha;
 	return *(uint32_t*)&Color;
 };
 
-
-
-unsigned int GDXY2::string_id(godot::String s) {
+unsigned int GDXY::string_id(godot::String s) {
 	const char* str = s.alloc_c_string();
 
 	int i;
@@ -680,7 +641,7 @@ unsigned int GDXY2::string_id(godot::String s) {
 	return v;
 }
 
-PoolByteArray GDXY2::format_pal(godot::PoolByteArray pal) {
+PoolByteArray GDXY::format_pal(godot::PoolByteArray pal) {
 	const uint16_t* in = (uint16_t * )pal.read().ptr();
 	godot::PoolByteArray pba = godot::PoolByteArray();
 	pba.resize(256 * 4);
@@ -695,9 +656,9 @@ PoolByteArray GDXY2::format_pal(godot::PoolByteArray pal) {
 	return pba;
 }
 
-GDXY2::RGBA GDXY2::RGB565to888(uint16_t color, uint8_t Alpha)
+GDXY::RGBA GDXY::RGB565to888(uint16_t color, uint8_t Alpha)
 {
-	GDXY2::RGBA pixel;
+	GDXY::RGBA pixel;
 
 	uint8_t r = (color >> 11) & 0x1f;
 	uint8_t g = (color >> 5) & 0x3f;
