@@ -1,6 +1,6 @@
 extends Object
 
-var GDXY2 = preload("res://bin/gdexample.gdns")
+var GDXY2 = preload("res://bin/gdxy2.gdns")
 var gdxy2 = GDXY2.new()
 
 var path: String

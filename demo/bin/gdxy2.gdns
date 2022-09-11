@@ -1,8 +1,8 @@
 [gd_resource type="NativeScript" load_steps=2 format=2]
 
-[ext_resource path="res://bin/gdexample.gdnlib" type="GDNativeLibrary" id=1]
+[ext_resource path="res://bin/gdxy2.gdnlib" type="GDNativeLibrary" id=1]
 
 [resource]
-resource_name = "gdexample"
+resource_name = "gdxy2"
 class_name = "GDXY2"
 library = ExtResource( 1 )

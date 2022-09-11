@@ -5,11 +5,9 @@
 #define MEM_READ_WITH_OFF(off,dst,src,len) if(off+len<=src.size()){  memcpy((uint8_t*)dst,(uint8_t*)(src.data()+off),len);off+=len;   }
 
 void GDXY2::_init() {
-	Godot::print("_init");
 }
 
 PoolByteArray GDXY2::read_mapx(godot::PoolByteArray bytes) {
-	Godot::print("read_mapx");
 	const uint8_t* in = bytes.read().ptr();
 
 	godot::PoolByteArray pba = godot::PoolByteArray();
@@ -25,8 +23,19 @@ PoolByteArray GDXY2::read_mapx(godot::PoolByteArray bytes) {
 	return pba;
 }
 
+PoolByteArray GDXY2::repair_jpeg(godot::PoolByteArray bytes) {
+	const uint8_t* in = bytes.read().ptr();
+
+	godot::PoolByteArray pba = godot::PoolByteArray();
+	pba.resize(bytes.size() * 2);
+	uint32_t tmpSize = 0;
+	jpeg_repair((uint8_t*)in, bytes.size(), pba.write().ptr(), &tmpSize);
+	pba.resize(tmpSize);
+
+	return pba;
+}
+
 PoolByteArray GDXY2::read_jpeg(godot::PoolByteArray bytes) {
-	Godot::print("read_jpeg");
 	const uint8_t* in = bytes.read().ptr();
 
 	std::vector<uint8_t> out(bytes.size() * 2, 0);
@@ -48,7 +57,6 @@ PoolByteArray GDXY2::read_jpeg(godot::PoolByteArray bytes) {
 
 
 PoolByteArray GDXY2::read_mask(godot::PoolByteArray bytes, int width, int height) {
-	Godot::print("_read");
 	const uint8_t* in = bytes.read().ptr();
 	std::vector<uint8_t> out((width + 3) / 4 * height, 0);
 

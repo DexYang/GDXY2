@@ -1,6 +1,6 @@
 extends Object
 
-var GDXY2 = preload("res://bin/gdexample.gdns")
+var GDXY2 = preload("res://bin/gdxy2.gdns")
 var gdxy2 = GDXY2.new()
 
 const BLOCK_WIDTH = 320.0 #地图块宽度
@@ -188,9 +188,9 @@ func getMap(i):
 		img = Image.new()
 		img.create_from_data(320, 240, false, Image.FORMAT_RGB8, pba)
 	elif self.flag == "0.1M":
-		var pba = gdxy2.read_jpeg(jpeg)
+		var pba = gdxy2.repair_jpeg(jpeg)
 		img = Image.new()
-		img.create_from_data(320, 240, false, Image.FORMAT_RGB8, pba)
+		var err = img.load_jpg_from_buffer(pba)
 
 	file.close()
 	return img

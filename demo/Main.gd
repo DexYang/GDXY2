@@ -16,11 +16,11 @@ func _ready():
 	update_texture()
 	$Sprite.offset = Vector2(image.get_width() / 2, image.get_height() / 2)
 	
-	var was = wdf.get("char\\0019\\defend.tcp")
-	var texture = ImageTexture.new()
-	texture.create_from_image(was.getFrame(0, 0).img)
-	$Sprite.set_texture(texture)
-	$Sprite.offset = Vector2(100, 100)
+#	var was = wdf.get("char\\0019\\defend.tcp")
+#	var texture = ImageTexture.new()
+#	texture.create_from_image(was.getFrame(0, 0).img)
+#	$Sprite.set_texture(texture)
+#	$Sprite.offset = Vector2(100, 100)
 	
 	
 func create_image():

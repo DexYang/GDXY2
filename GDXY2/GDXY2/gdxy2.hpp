@@ -30,6 +30,7 @@ public:
 		godot::register_method("read_mask", &GDXY2::read_mask);
 		godot::register_method("read_mapx", &GDXY2::read_mapx);
 		godot::register_method("read_jpeg", &GDXY2::read_jpeg);
+		godot::register_method("repair_jpeg", &GDXY2::repair_jpeg);
 		godot::register_method("read_was", &GDXY2::read_was);
 		godot::register_method("format_pal", &GDXY2::format_pal);
 		godot::register_method("string_id", &GDXY2::string_id);
@@ -38,6 +39,8 @@ public:
 	void _init();
 
 	PoolByteArray read_mapx(godot::PoolByteArray bytes);
+
+	PoolByteArray repair_jpeg(godot::PoolByteArray bytes);
 
 	PoolByteArray read_jpeg(godot::PoolByteArray bytes);
 
