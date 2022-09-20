@@ -18,10 +18,7 @@
     <ClCompile Include="entry.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="gdxy2.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="ujpeg.cpp">
+    <ClCompile Include="gdxy.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>
@@ -29,10 +26,7 @@
     <ClInclude Include="common.hpp">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="gdxy2.hpp">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="ujpeg.h">
+    <ClInclude Include="gdxy.hpp">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>

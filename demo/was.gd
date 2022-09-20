@@ -64,7 +64,7 @@ func _init(path: String, offset: int = 0, size: int = 0):
 		self.frames[i] = []
 		self.frames[i].resize(self.frame_num)
 		for j in range(self.frame_num):
-			var index = i * self.direction_num + j
+			var index = i * self.frame_num + j
 			file.seek(self.pic_offsets[index])
 			var frame = {}
 			frame.x = file.get_32()
@@ -76,7 +76,7 @@ func _init(path: String, offset: int = 0, size: int = 0):
 			if index < self.pic_num - 1:
 				frame_size = self.pic_offsets[index + 1] - self.pic_offsets[index]
 			else:
-				frame_size = self.size - self.pic_offsets[index]
+				frame_size = self.size + self.offset - self.pic_offsets[index]
 			
 			file.seek(self.pic_offsets[index])
 			var buff = file.get_buffer(frame_size + 16)

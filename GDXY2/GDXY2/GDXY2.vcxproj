@@ -139,14 +139,12 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="gdxy2.cpp" />
+    <ClCompile Include="gdxy.cpp" />
     <ClCompile Include="entry.cpp" />
-    <ClCompile Include="ujpeg.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="common.hpp" />
-    <ClInclude Include="gdxy2.hpp" />
-    <ClInclude Include="ujpeg.h" />
+    <ClInclude Include="gdxy.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
